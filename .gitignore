@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+*.log
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Distribution
+dist/
+build/
+*.egg-info/
+
+# Claude Code (AI Assistant)
+.claude/
+CLAUDE.md
+.claude-*
+
+# Streamlit
+.streamlit/
+
+# Docker volumes (local)
+oracle-data/
+
+# Secrets (never commit)
+*.pem
+*.key
+credentials.json
