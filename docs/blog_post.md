@@ -781,6 +781,8 @@ The patterns shown here scale from simple chatbots to complex enterprise AI syst
 
 ---
 
-*Full source code available in the repository.*
+*Full source code available in the [repository](https://github.com/velloreakash21/oracle_db_mcp_agent_workflow).*
 
-*Questions? Feel free to reach out!*
+---
+
+**Author: [Vellore Akash](https://www.linkedin.com/in/velloreakash/)** - AI/ML Architect with experience building enterprise AI platforms using LangChain, LlamaIndex, and cloud-native technologies.

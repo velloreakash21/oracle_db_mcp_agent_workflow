@@ -1,241 +1,199 @@
 # Oracle Database MCP Agent Workflow
 
-An AI-powered Code Assistant that leverages multi-agent orchestration to help developers find documentation and code examples. Built with LangGraph, Oracle Database 23ai, and OpenTelemetry.
+A multi-agent Code Assistant built with LangGraph, Oracle Database 23ai, and OpenTelemetry for distributed tracing.
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
 ![LangGraph](https://img.shields.io/badge/LangGraph-Multi--Agent-green.svg)
 ![Oracle](https://img.shields.io/badge/Oracle-23ai-red.svg)
-![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688.svg)
+![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED.svg)
 
-## Overview
+## About
 
-This project demonstrates a sophisticated multi-agent system that combines:
-- **LangGraph** for agent orchestration
-- **Oracle Database 23ai** for code snippet storage and retrieval
-- **Tavily API** for real-time documentation search
-- **OpenTelemetry + Jaeger** for distributed tracing
-- **Streamlit** for an interactive demo UI
+This project showcases a production-ready multi-agent orchestration system that helps developers find documentation and code examples. The architecture leverages my experience building enterprise AI platforms with LangChain, LlamaIndex, and cloud-native technologies.
+
+**Key highlights:**
+- Intelligent query routing between specialized agents
+- Oracle Database 23ai integration for code snippet retrieval
+- Real-time documentation search via Tavily API
+- Full observability with OpenTelemetry and Jaeger
+- Clean Streamlit interface for demonstration
 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                      User Query                              │
-└─────────────────────────────────────────────────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   Orchestrator Agent                         │
-│              (Analyzes & Routes Queries)                     │
-└─────────────────────────────────────────────────────────────┘
-                   │                    │
-                   ▼                    ▼
-┌──────────────────────────┐  ┌──────────────────────────┐
-│    Doc Search Agent      │  │    Code Query Agent      │
-│      (Tavily API)        │  │     (Oracle 23ai)        │
-│                          │  │                          │
-│  • Web documentation     │  │  • Code snippets         │
-│  • Real-time search      │  │  • 40+ examples          │
-│  • Multiple sources      │  │  • Categorized by topic  │
-└──────────────────────────┘  └──────────────────────────┘
-                   │                    │
-                   └────────┬───────────┘
-                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   Combined Response                          │
-│         (Documentation + Code Examples + Sources)            │
-└─────────────────────────────────────────────────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│                     Streamlit UI                             │
-│    • Chat Interface    • Agent Activity    • Trace Viz      │
-└─────────────────────────────────────────────────────────────┘
+                        ┌─────────────────┐
+                        │   User Query    │
+                        └────────┬────────┘
+                                 │
+                                 ▼
+                   ┌─────────────────────────┐
+                   │   Orchestrator Agent    │
+                   │  (Query Analysis &      │
+                   │   Routing Logic)        │
+                   └───────────┬─────────────┘
+                               │
+              ┌────────────────┴────────────────┐
+              │                                 │
+              ▼                                 ▼
+┌─────────────────────────┐       ┌─────────────────────────┐
+│   Doc Search Agent      │       │   Code Query Agent      │
+│   ─────────────────     │       │   ─────────────────     │
+│   • Tavily API          │       │   • Oracle 23ai         │
+│   • Web documentation   │       │   • 40+ code snippets   │
+│   • Real-time results   │       │   • Full-text search    │
+└───────────┬─────────────┘       └───────────┬─────────────┘
+            │                                 │
+            └────────────────┬────────────────┘
+                             │
+                             ▼
+                  ┌─────────────────────┐
+                  │  Combined Response  │
+                  │  + Trace Metadata   │
+                  └─────────────────────┘
 ```
-
-## Features
-
-- **Multi-Agent Orchestration**: Intelligent routing of queries to specialized agents
-- **Oracle Database Integration**: Code snippets stored in Oracle 23ai with full-text search
-- **Real-time Documentation**: Tavily API integration for up-to-date documentation
-- **Distributed Tracing**: Full observability with OpenTelemetry and Jaeger
-- **Interactive UI**: Professional Streamlit interface with trace visualization
-- **Extensible Design**: Easy to add new agents and capabilities
 
 ## Tech Stack
 
-| Component | Technology |
-|-----------|------------|
+| Layer | Technology |
+|-------|------------|
 | Agent Framework | LangGraph |
 | LLM | Claude 3.5 Sonnet |
 | Database | Oracle Database 23ai (Free) |
 | Web Search | Tavily API |
-| Tracing | OpenTelemetry + Jaeger |
+| Observability | OpenTelemetry + Jaeger |
 | Frontend | Streamlit |
-| Container | Docker |
+| Containerization | Docker Compose |
 
-## Quick Start
-
-### Prerequisites
+## Prerequisites
 
 - Python 3.11+
 - Docker Desktop
-- API Keys:
-  - [Anthropic API Key](https://console.anthropic.com/)
-  - [Tavily API Key](https://tavily.com/) (Free tier: 1000 searches/month)
+- [Anthropic API Key](https://console.anthropic.com/)
+- [Tavily API Key](https://tavily.com/)
 
-### Installation
+## Setup
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/velloreakash21/oracle_db_mcp_agent_workflow.git
-   cd oracle_db_mcp_agent_workflow
-   ```
+### 1. Clone and Configure
 
-2. **Create virtual environment**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+```bash
+git clone https://github.com/velloreakash21/oracle_db_mcp_agent_workflow.git
+cd oracle_db_mcp_agent_workflow
 
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
 
-4. **Configure environment**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your API keys
-   ```
+cp .env.example .env
+# Add your API keys to .env
+```
 
-5. **Start Docker services**
-   ```bash
-   docker-compose up -d
-   ```
+### 2. Start Services
 
-6. **Initialize database** (wait for Oracle to be healthy first)
-   ```bash
-   # Check Oracle health
-   docker ps --format "table {{.Names}}\t{{.Status}}"
+```bash
+docker-compose up -d
+```
 
-   # Create user and schema
-   docker exec -i oracle-23ai-code-assistant sqlplus sys/CodeAssist123@FREEPDB1 as sysdba <<'EOF'
-   CREATE USER codeassist IDENTIFIED BY CodeAssist123;
-   GRANT CONNECT, RESOURCE, CREATE TABLE, CREATE TRIGGER, CREATE SEQUENCE, UNLIMITED TABLESPACE TO codeassist;
-   EXIT;
-   EOF
+Wait for Oracle to be healthy (~2-3 minutes):
+```bash
+docker ps --format "table {{.Names}}\t{{.Status}}"
+```
 
-   # Create tables
-   docker exec -i oracle-23ai-code-assistant sqlplus codeassist/CodeAssist123@FREEPDB1 <<'EOF'
-   CREATE TABLE code_snippets (
-       id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-       title VARCHAR2(200) NOT NULL,
-       description VARCHAR2(2000),
-       language VARCHAR2(50) NOT NULL,
-       framework VARCHAR2(100),
-       category VARCHAR2(100),
-       difficulty VARCHAR2(20) DEFAULT 'intermediate',
-       code CLOB NOT NULL,
-       tags VARCHAR2(500),
-       source_url VARCHAR2(500),
-       author VARCHAR2(100) DEFAULT 'Code Assistant',
-       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-   );
-   EXIT;
-   EOF
+### 3. Initialize Database
 
-   # Seed data
-   python -m src.database.seed_data
-   ```
+```bash
+# Create Oracle user
+docker exec -i oracle-23ai-code-assistant sqlplus sys/CodeAssist123@FREEPDB1 as sysdba <<'EOF'
+CREATE USER codeassist IDENTIFIED BY CodeAssist123;
+GRANT CONNECT, RESOURCE, CREATE TABLE, CREATE TRIGGER, CREATE SEQUENCE, UNLIMITED TABLESPACE TO codeassist;
+EXIT;
+EOF
 
-7. **Run the application**
-   ```bash
-   streamlit run streamlit_app.py
-   ```
+# Create schema
+docker exec -i oracle-23ai-code-assistant sqlplus codeassist/CodeAssist123@FREEPDB1 <<'EOF'
+CREATE TABLE code_snippets (
+    id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    title VARCHAR2(200) NOT NULL,
+    description VARCHAR2(2000),
+    language VARCHAR2(50) NOT NULL,
+    framework VARCHAR2(100),
+    category VARCHAR2(100),
+    difficulty VARCHAR2(20) DEFAULT 'intermediate',
+    code CLOB NOT NULL,
+    tags VARCHAR2(500),
+    source_url VARCHAR2(500),
+    author VARCHAR2(100) DEFAULT 'Code Assistant',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+EXIT;
+EOF
 
-8. **Open in browser**
-   - **Code Assistant**: http://localhost:8501
-   - **Jaeger UI**: http://localhost:16686
+# Seed data
+python -m src.database.seed_data
+```
+
+### 4. Run
+
+```bash
+streamlit run streamlit_app.py
+```
+
+**Access:**
+- Application: http://localhost:8501
+- Jaeger Traces: http://localhost:16686
 
 ## Usage
 
-### Example Queries
+### Streamlit UI
 
-**Database Connections:**
-```
-How do I connect to Oracle database in Python?
-Show me connection pooling examples with Oracle
-```
+Ask questions like:
+- "How do I connect to Oracle database in Python?"
+- "Show me connection pooling examples"
+- "How do I create a FastAPI endpoint?"
+- "Show me LangChain agent examples"
 
-**API Development:**
-```
-How do I create a REST API with FastAPI?
-Show me JWT authentication examples
-```
-
-**AI/LLM Integration:**
-```
-How do I create a LangChain agent?
-Show me how to use Tavily for web search
-```
-
-### CLI Mode
+### CLI
 
 ```bash
-# Single query
-python -m src.main "How do I connect to Oracle database?"
-
-# Interactive mode
-python -m src.main
+python -m src.main "How do I handle Oracle transactions?"
 ```
 
 ### Python API
 
 ```python
-from src.agents import ask_assistant
+from src.agents.orchestrator import ask_assistant
 
-response = ask_assistant("How do I use connection pooling with Oracle?")
+response = ask_assistant("Show me JWT authentication examples")
 print(response)
 ```
 
 ## Project Structure
 
 ```
-oracle_db_mcp_agent_workflow/
 ├── src/
 │   ├── agents/
-│   │   ├── orchestrator.py    # Main coordinator agent
-│   │   ├── doc_search.py      # Documentation search agent
-│   │   └── code_query.py      # Database query agent
+│   │   ├── orchestrator.py     # Query routing and response aggregation
+│   │   ├── doc_search.py       # Tavily documentation search
+│   │   └── code_query.py       # Oracle database queries
 │   ├── tools/
-│   │   ├── tavily_search.py   # Tavily API wrapper
-│   │   └── oracle_mcp.py      # Oracle database tools
+│   │   ├── tavily_search.py    # Tavily API wrapper
+│   │   └── oracle_mcp.py       # Oracle connection utilities
 │   ├── database/
-│   │   ├── schema.sql         # Database schema
-│   │   ├── init_schema.py     # Schema initialization
-│   │   └── seed_data.py       # Sample code snippets
+│   │   ├── schema.sql          # Table definitions
+│   │   └── seed_data.py        # 40+ code snippets
 │   ├── telemetry/
-│   │   └── tracing.py         # OpenTelemetry setup
-│   ├── frontend/
-│   │   ├── app.py             # Streamlit main app
-│   │   ├── components.py      # UI components
-│   │   └── styles.py          # Custom CSS
-│   ├── config.py              # Configuration
-│   └── main.py                # CLI entry point
-├── docs/
-│   └── blog_post.md           # Technical blog post
-├── docker-compose.yml         # Oracle + Jaeger containers
-├── requirements.txt           # Python dependencies
-├── demo.md                    # Demo guide
-├── streamlit_app.py           # Streamlit entry point
-└── .env.example               # Environment template
+│   │   └── tracing.py          # OpenTelemetry configuration
+│   └── frontend/
+│       ├── app.py              # Streamlit application
+│       ├── components.py       # UI components
+│       └── styles.py           # Custom styling
+├── docker-compose.yml          # Oracle 23ai + Jaeger
+├── requirements.txt
+└── streamlit_app.py            # Entry point
 ```
 
 ## Code Snippets Database
-
-The database contains 40 pre-loaded code snippets:
 
 | Category | Count | Topics |
 |----------|-------|--------|
@@ -248,98 +206,32 @@ The database contains 40 pre-loaded code snippets:
 
 ## Observability
 
-### Jaeger Tracing
-
-View detailed traces at http://localhost:16686
-
-Each query generates spans for:
-- `orchestrator_analyze` - Query analysis
-- `doc_search_agent` - Tavily documentation search
-- `code_query_agent` - Oracle database query
+Traces are captured for each query:
+- `orchestrator_analyze` - Initial query analysis
+- `doc_search_agent` - Documentation retrieval
+- `code_query_agent` - Database lookup
 - `orchestrator_combine` - Response generation
 
-### Metrics
-
-The UI displays real-time metrics:
-- Total response time
-- LLM inference time
-- Database query time
-- Web search time
+View detailed spans and timing at http://localhost:16686
 
 ## Configuration
 
-### Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `ANTHROPIC_API_KEY` | Claude API key | Yes |
-| `TAVILY_API_KEY` | Tavily search API key | Yes |
-| `ORACLE_HOST` | Oracle host (default: localhost) | No |
-| `ORACLE_PORT` | Oracle port (default: 1521) | No |
-| `ORACLE_SERVICE` | Service name (default: FREEPDB1) | No |
-| `ORACLE_USER` | Database user (default: codeassist) | No |
-| `ORACLE_PASSWORD` | Database password | No |
-
-## Development
-
-### Adding New Agents
-
-1. Create agent in `src/agents/`
-2. Define state and tools
-3. Register in orchestrator
-4. Add tracing spans
-
-### Adding Code Snippets
-
-```python
-# In src/database/seed_data.py
-snippets.append({
-    "title": "Your Snippet Title",
-    "description": "Description",
-    "language": "python",
-    "category": "database",
-    "code": """your code here""",
-    "tags": "tag1,tag2"
-})
-```
-
-## Troubleshooting
-
-### Oracle Connection Issues
-```bash
-# Check Oracle status
-docker logs oracle-23ai-code-assistant
-
-# Restart Oracle
-docker-compose restart oracle-db
-```
-
-### Streamlit Issues
-```bash
-# Clear cache
-find . -name "__pycache__" -type d -exec rm -rf {} +
-streamlit run streamlit_app.py
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+| Variable | Description |
+|----------|-------------|
+| `ANTHROPIC_API_KEY` | Claude API key |
+| `TAVILY_API_KEY` | Tavily search key |
+| `ORACLE_HOST` | Database host (default: localhost) |
+| `ORACLE_PORT` | Database port (default: 1521) |
+| `ORACLE_SERVICE` | Service name (default: FREEPDB1) |
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
+MIT License - see [LICENSE](LICENSE)
 
-## Acknowledgments
+## Author
 
-- [LangGraph](https://github.com/langchain-ai/langgraph) - Multi-agent orchestration
-- [Oracle Database](https://www.oracle.com/database/) - Enterprise database
-- [Tavily](https://tavily.com/) - AI-powered search
-- [Anthropic](https://www.anthropic.com/) - Claude LLM
-- [OpenTelemetry](https://opentelemetry.io/) - Observability framework
+**Vellore Akash**
+AI/ML Architect
 
----
-
-**Built for Oracle Developer Evangelist Technical Assignment**
+- [LinkedIn](https://www.linkedin.com/in/velloreakash/)
+- [GitHub](https://github.com/velloreakash21)
