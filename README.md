@@ -1,6 +1,6 @@
-# Oracle Database MCP Agent Workflow
+# Multi-Agent Code Assistant
 
-A multi-agent Code Assistant built with LangGraph, Oracle Database 23ai, and OpenTelemetry for distributed tracing.
+An AI-powered Code Assistant using multi-agent orchestration with LangGraph, Oracle Database 23ai, and OpenTelemetry for distributed tracing.
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
 ![LangGraph](https://img.shields.io/badge/LangGraph-Multi--Agent-green.svg)
@@ -77,8 +77,8 @@ This project showcases a production-ready multi-agent orchestration system that 
 ### 1. Clone and Configure
 
 ```bash
-git clone https://github.com/velloreakash21/oracle_db_mcp_agent_workflow.git
-cd oracle_db_mcp_agent_workflow
+git clone https://github.com/velloreakash21/multi-agent-code-assistant.git
+cd multi-agent-code-assistant
 
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
